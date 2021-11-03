@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useState } from "react";
+import * as data from "./data.json";
+import PostsPage from "./Posts/PostsPage";
 
-function App() {
+const App = () => {
+  console.log("data", data.default);
+  const dataArray = data.default;
+
+  const [searchedWord, setSearchedWord] = useState("");
+  const [filteredItems, setFilteredItems] = useState(dataArray);
+
+  const searchChange = (event) => {
+    const filteredItems = dataArray.filter((item) => {
+      console.log(item.title)
+      return (
+        item.title.S.toLowerCase().includes(event.toLowerCase()) ||
+        item.content.S.toLowerCase().includes(event.toLowerCase())
+      );
+    });
+    setSearchedWord(event);
+    setFilteredItems(filteredItems)
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <PostsPage
+        data={filteredItems}
+        searchedWord={searchedWord}
+        onSearchChange={searchChange}
+      />
     </div>
   );
-}
+};
 
 export default App;
