@@ -10,16 +10,24 @@ const App = () => {
   const [searchedWord, setSearchedWord] = useState("");
   const [filteredItems, setFilteredItems] = useState(dataArray);
 
-  const searchChange = (event) => {
+  const searchChange = (searchTerm) => {
     const filteredItems = dataArray.filter((item) => {
-      console.log(item.title)
+      console.log(item.title);
       return (
-        item.title.S.toLowerCase().includes(event.toLowerCase()) ||
-        item.content.S.toLowerCase().includes(event.toLowerCase())
+        item.title.S.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.content.S.toLowerCase().includes(searchTerm.toLowerCase())
       );
     });
-    setSearchedWord(event);
-    setFilteredItems(filteredItems)
+    setSearchedWord(searchTerm);
+    setFilteredItems(filteredItems);
+  };
+
+  const filterByIndustry = (industryChoice) => {
+    const postsFilteredByIndustry = dataArray.filter((post) => {
+      console.log('industryChoice', industryChoice)
+      return post.industry.S.toLowerCase().includes(industryChoice.toLowerCase());
+    });
+    setFilteredItems(postsFilteredByIndustry);
   };
 
   return (
@@ -28,6 +36,7 @@ const App = () => {
         data={filteredItems}
         searchedWord={searchedWord}
         onSearchChange={searchChange}
+        onIndustryChoice={filterByIndustry}
       />
     </div>
   );
