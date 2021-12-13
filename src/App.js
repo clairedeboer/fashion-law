@@ -24,10 +24,16 @@ const App = () => {
 
   const filterByIndustry = (industryChoice) => {
     const postsFilteredByIndustry = dataArray.filter((post) => {
-      console.log('industryChoice', industryChoice)
       return post.industry.S.toLowerCase().includes(industryChoice.toLowerCase());
     });
     setFilteredItems(postsFilteredByIndustry);
+  };
+
+  const filterByLocation = (locationChoice) => {
+    const postsFilteredByLocation = dataArray.filter((post) => {
+      return post.region.S.toLowerCase().includes(locationChoice.toLowerCase());
+    });
+    setFilteredItems(postsFilteredByLocation);
   };
 
   return (
@@ -37,6 +43,7 @@ const App = () => {
         searchedWord={searchedWord}
         onSearchChange={searchChange}
         onIndustryChoice={filterByIndustry}
+        onLocationChoice={filterByLocation}
       />
     </div>
   );
